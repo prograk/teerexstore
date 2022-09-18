@@ -1,0 +1,1 @@
+export const SET_PRODUCT_DATA_TO_LOCAL = 'SetProductDataToLocal';

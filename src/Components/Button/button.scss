@@ -1,0 +1,47 @@
+button {
+  height: 44px;
+  font-size: 16px;
+  line-height: 20px;
+  background: var(--black);
+  border: 1px solid var(--black);
+  border-radius: 4px;
+  color: var(--white);
+  font-weight: 500;
+  padding: 0 20px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.btn-addbag {
+  min-width: 140px;
+}
+
+.btn-qty {
+  justify-content: space-around;
+  min-width: 140px;
+  padding: 0;
+  > div {
+    font-size: 25px;
+    line-height: 40px;
+    justify-content: center;
+    align-items: center;
+    height: inherit;
+  }
+}
+
+.btn-small {
+  width: 50px;
+}
+
+.btn-text {
+  background-color: transparent;
+  border: transparent;
+  color: var(--secondary);
+  cursor: default !important;
+}
+
+.btn-warning {
+  color: var(--red);
+}

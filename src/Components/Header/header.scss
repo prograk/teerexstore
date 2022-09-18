@@ -1,0 +1,46 @@
+.store-header {
+  position: sticky;
+  padding: 0 20px;
+  top: 0;
+  height: var(--header-height);
+  background-color: var(--primary);
+  margin-bottom: 20px;
+  z-index: 1;
+
+  a {
+    color: var(--white) !important;
+    text-decoration: none;
+  }
+
+  h1.logo {
+    margin: 0;
+  }
+}
+
+nav {
+  a {
+    font-size: 18px;
+    margin-left: 20px;
+  }
+  i {
+    font-size: 30px !important;
+  }
+}
+
+a.cartBag sup {
+  position: absolute;
+  top: -10px;
+  right: -10px;
+  height: 20px;
+  width: 20px;
+  background: var(--secondary);
+  display: flex;
+  color: var(--white);
+  align-items: center;
+  justify-content: center;
+  border-radius: 100px;
+}
+
+a.cartBag {
+  position: relative;
+}

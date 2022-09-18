@@ -1,0 +1,30 @@
+.filters {
+  background: var(--white);
+  padding: 20px;
+
+  >div {
+    font-size: 18px;
+    font-weight: 500;
+    margin-bottom: 4px;
+  }
+
+  >label input {
+    margin-right: 6px;
+  }
+}
+
+.filter-sticky {
+  position: sticky;
+  top: var(--header-height);
+}
+
+.search-wrapper {
+  margin-bottom: 20px;
+}
+
+.searchInput {
+  border: 0;
+  border-bottom: 1px solid var(--secondary);
+  width: 360px;
+  padding: 0 10px;
+}

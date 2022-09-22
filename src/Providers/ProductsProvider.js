@@ -6,7 +6,6 @@ import {
   useState,
 } from "react";
 import { getProducts } from "src/api";
-import { isObjEmpty } from "src/utils/misc";
 import useLoadingApi from "src/utils/useLoadingApi";
 import { useSnackbar } from "react-simple-snackbar";
 
@@ -20,7 +19,6 @@ const ProductsProvider = ({ children }) => {
   const [typeFilter, setTypeFilter] = useState([]);
   const [priceFilter, setPriceFilter] = useState([]);
   const [cartCount, setCartCount] = useState(0);
-  const [filtersSelected, setFiltersSelected] = useState([]);
   const [openSnackbar] = useSnackbar();
 
   const getFilters = (products) => {
@@ -57,6 +55,10 @@ const ProductsProvider = ({ children }) => {
       getFilters(productsHash);
       setProductsMapped(productsHash);
       setBackup(productsHash);
+    })
+    .catch((err) => {
+      setProductsMapped({});
+      setBackup({});
     });
   }, [setProductsMapped]);
 
@@ -249,15 +251,6 @@ const ProductsProvider = ({ children }) => {
       const name = matchFn(products, "name", value);
       const color = matchFn(products, "color", value);
       const type = matchFn(products, "type", value);
-      // const name = products.filter((product) =>
-      //   product.name.toLowerCase().includes(value)
-      // );
-      // const color = products.filter((product) =>
-      //   product.color.toLowerCase().includes(value)
-      // );
-      // const type = products.filter((product) =>
-      //   product.type.toLowerCase().includes(value)
-      // );
       
       const filteredRepeative = filterRepeative([...name, ...color, ...type]);
       const productsHash = productHashFn(filteredRepeative);
@@ -271,6 +264,7 @@ const ProductsProvider = ({ children }) => {
     productsLoading,
     productsLoaded,
     productsMapped,
+    backup,
     cartCount,
     colorFilter,
     genderFilter,

@@ -17,27 +17,31 @@ const ProductsProvider = ({ children }) => {
   const [colorFilter, setColorFilter] = useState([]);
   const [genderFilter, setGenderFilter] = useState([]);
   const [typeFilter, setTypeFilter] = useState([]);
-  const [priceFilter, setPriceFilter] = useState([]);
+  const [priceFilter] = useState(["0-250", "251 - 450", "451+"]);
+  const [selectedValues, setSelectedValues] = useState([]);
+  // const [selectedPrice, setSelectedPrice] = useState([]);
+  const [currentFilter, setCurrentFilter] = useState("");
   const [cartCount, setCartCount] = useState(0);
   const [openSnackbar] = useSnackbar();
 
   const getFilters = (products) => {
     const colors = new Set();
     const genders = new Set();
-    const prices = new Set();
+    // const prices = new Set();
     const types = new Set();
     Object.values(products).forEach((product) => {
       colors.add(product.color);
       genders.add(product.gender);
-      prices.add(product.price);
+      // prices.add(product.price);
       types.add(product.type);
     });
     setColorFilter([...Array.from(colors).sort((a, b) => a - b)]);
     setGenderFilter([...Array.from(genders).sort((a, b) => a - b)]);
-    setPriceFilter([...Array.from(prices).sort((a, b) => a - b)]);
+    // setPriceFilter(['0-250', '251 - 450', '451+'])
+    // setPriceFilter([...Array.from(prices).sort((a, b) => a - b)]);
     setTypeFilter([...Array.from(types).sort((a, b) => a - b)]);
   };
-  
+
   const productHashFn = (products) => {
     return products.reduce((acc, product) => {
       const addedQty = product?.addedQty > 0 ? product.addedQty : 0;
@@ -47,19 +51,20 @@ const ProductsProvider = ({ children }) => {
       };
       return acc;
     }, {});
-  }
+  };
 
   const getProductsCallback = useCallback(async () => {
-    await getProducts().then((res) => {
-      const productsHash = productHashFn(res);
-      getFilters(productsHash);
-      setProductsMapped(productsHash);
-      setBackup(productsHash);
-    })
-    .catch((err) => {
-      setProductsMapped({});
-      setBackup({});
-    });
+    await getProducts()
+      .then((res) => {
+        const productsHash = productHashFn(res);
+        getFilters(productsHash);
+        setProductsMapped(productsHash);
+        setBackup(productsHash);
+      })
+      .catch((err) => {
+        setProductsMapped({});
+        setBackup({});
+      });
   }, [setProductsMapped]);
 
   const {
@@ -147,7 +152,7 @@ const ProductsProvider = ({ children }) => {
                   ...product,
                   addedQty: addedQty - 1,
                 },
-              }
+              };
               setProductsMapped({
                 ...tempData,
               });
@@ -195,18 +200,76 @@ const ProductsProvider = ({ children }) => {
     const {
       target: { checked },
     } = event;
-    const products = {
-      ...productsMapped,
-    };
-    const tempProducts = Object.values(products).filter(
-      (product) => product[filter] === selected
-    );
-    const productsHash = productHashFn(tempProducts);
-    setProductsMapped({
-      ...(checked && { ...productsHash }),
-      ...(!checked && { ...backup }),
-    });
+
+    if (checked) {
+      const filterValues = [...selectedValues, selected];
+      setSelectedValues(filterValues);
+    } else {
+      const filterValues = [...selectedValues.filter((sv) => sv !== selected)];
+      setSelectedValues(filterValues);
+    }
+    setCurrentFilter(filter);
   };
+
+  const filterProductFun = () => {
+    if (selectedValues.length === 0) {
+      setProductsMapped({ ...backup });
+      return;
+    }
+
+    const products = {
+      ...backup,
+    };
+
+    let tempProducts = Object.values(products).filter((product) => {
+      const { color, gender, type } = product;
+      if (selectedValues.indexOf(color) !== -1) {
+        return product;
+      }
+      if (selectedValues.indexOf(gender) !== -1) {
+        return product;
+      }
+      if (selectedValues.indexOf(type) !== -1) {
+        return product;
+      }
+      if (selectedValues.indexOf('0-250') !== -1) {
+        return product;
+      }
+      if (selectedValues.indexOf('251-450') !== -1) {
+        return product;
+      }
+      if (selectedValues.indexOf('450+') !== -1) {
+        return product;
+      }
+    })
+
+    // selectedValues.forEach((selectedValue) => {
+    //   tempProducts = Object.values(products).filter((product) => {
+    //     switch (selectedValue) {
+    //       case "0-250": {
+    //         return product.price <= 250;
+    //       }
+    //       case "251 - 450": {
+    //         return product.price >= 251 && product.price <= 450;
+    //       }
+    //       case "451+": {
+    //         return product.price >= 451;
+    //       }
+    //       default: {
+    //         return product[filter] === selectedValue;
+    //       }
+    //     }
+    //   });
+    // });
+
+    const productsHash = productHashFn(tempProducts);
+    setProductsMapped({ ...productsHash });
+  };
+
+  useEffect(() => {
+    filterProductFun(currentFilter);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [selectedValues, currentFilter]);
 
   const matchFn = (values, filterBy, input) => {
     const p = Array.from(input).reduce(

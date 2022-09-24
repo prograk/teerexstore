@@ -9,7 +9,7 @@ const CheckBox = ({ onClick = noop, name = "", text = "" }) => {
   }
   return (
     <label>
-      <input type="checkbox" name={name} onChange={handleChange} checked={isChecked} />
+      <input type="checkbox" name={name} onChange={handleChange} checked={isChecked} value={text} />
       {text}
     </label>
   );

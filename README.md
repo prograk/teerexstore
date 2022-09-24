@@ -1,6 +1,6 @@
 # Getting Started with Create React App
 
-demo [https://prograk.github.io/teerexstore/]
+[demo](https://prograk.github.io/teerexstore/)
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 

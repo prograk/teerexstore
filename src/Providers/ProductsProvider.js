@@ -19,7 +19,6 @@ const ProductsProvider = ({ children }) => {
   const [typeFilter, setTypeFilter] = useState([]);
   const [priceFilter] = useState(["0-250", "251 - 450", "451+"]);
   const [selectedValues, setSelectedValues] = useState([]);
-  // const [selectedPrice, setSelectedPrice] = useState([]);
   const [currentFilter, setCurrentFilter] = useState("");
   const [cartCount, setCartCount] = useState(0);
   const [openSnackbar] = useSnackbar();
@@ -27,18 +26,14 @@ const ProductsProvider = ({ children }) => {
   const getFilters = (products) => {
     const colors = new Set();
     const genders = new Set();
-    // const prices = new Set();
     const types = new Set();
     Object.values(products).forEach((product) => {
       colors.add(product.color);
       genders.add(product.gender);
-      // prices.add(product.price);
       types.add(product.type);
     });
     setColorFilter([...Array.from(colors).sort((a, b) => a - b)]);
     setGenderFilter([...Array.from(genders).sort((a, b) => a - b)]);
-    // setPriceFilter(['0-250', '251 - 450', '451+'])
-    // setPriceFilter([...Array.from(prices).sort((a, b) => a - b)]);
     setTypeFilter([...Array.from(types).sort((a, b) => a - b)]);
   };
 
@@ -75,6 +70,7 @@ const ProductsProvider = ({ children }) => {
 
   useEffect(() => {
     fetchProducts();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const addToBag = useCallback(

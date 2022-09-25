@@ -75,6 +75,7 @@ const ProductsProvider = ({ children }) => {
 
   useEffect(() => {
     fetchProducts();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const addToBag = useCallback(
@@ -221,6 +222,7 @@ const ProductsProvider = ({ children }) => {
       ...backup,
     };
 
+    // eslint-disable-next-line array-callback-return
     let tempProducts = Object.values(products).filter((product) => {
       const { color, gender, type } = product;
       if (selectedValues.indexOf(color) !== -1) {
@@ -232,16 +234,16 @@ const ProductsProvider = ({ children }) => {
       if (selectedValues.indexOf(type) !== -1) {
         return product;
       }
-      if (selectedValues.indexOf('0-250') !== -1) {
-        return product;
+      if (selectedValues.indexOf("0-250") !== -1) {
+        return product.price <= 250;
       }
-      if (selectedValues.indexOf('251-450') !== -1) {
-        return product;
+      if (selectedValues.indexOf("251-450") !== -1) {
+        return product.price >= 251 && product.price <= 450;
       }
-      if (selectedValues.indexOf('450+') !== -1) {
-        return product;
+      if (selectedValues.indexOf("450+") !== -1) {
+        return product.price >= 451;
       }
-    })
+    });
 
     // selectedValues.forEach((selectedValue) => {
     //   tempProducts = Object.values(products).filter((product) => {
@@ -314,7 +316,7 @@ const ProductsProvider = ({ children }) => {
       const name = matchFn(products, "name", value);
       const color = matchFn(products, "color", value);
       const type = matchFn(products, "type", value);
-      
+
       const filteredRepeative = filterRepeative([...name, ...color, ...type]);
       const productsHash = productHashFn(filteredRepeative);
       setProductsMapped({ ...productsHash });

@@ -17,7 +17,7 @@ const ProductsProvider = ({ children }) => {
   const [colorFilter, setColorFilter] = useState([]);
   const [genderFilter, setGenderFilter] = useState([]);
   const [typeFilter, setTypeFilter] = useState([]);
-  const [priceFilter] = useState(["0-250", "251 - 450", "451+"]);
+  const [priceFilter] = useState(["0-250", "251-450", "451+"]);
   const [selectedValues, setSelectedValues] = useState([]);
   // const [selectedPrice, setSelectedPrice] = useState([]);
   const [currentFilter, setCurrentFilter] = useState("");

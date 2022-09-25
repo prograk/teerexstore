@@ -17,7 +17,7 @@ const ProductsProvider = ({ children }) => {
   const [colorFilter, setColorFilter] = useState([]);
   const [genderFilter, setGenderFilter] = useState([]);
   const [typeFilter, setTypeFilter] = useState([]);
-  const [priceFilter] = useState(["0-250", "251 - 450", "451+"]);
+  const [priceFilter] = useState(["0-250", "250-450", "450+"]);
   const [selectedValues, setSelectedValues] = useState([]);
   const [currentFilter, setCurrentFilter] = useState("");
   const [cartCount, setCartCount] = useState(0);
@@ -232,7 +232,7 @@ const ProductsProvider = ({ children }) => {
       if (selectedValues.indexOf('0-250') !== -1) {
         return product.price <= 250;
       }
-      if (selectedValues.indexOf('251-450') !== -1) {
+      if (selectedValues.indexOf('250-450') !== -1) {
         return product.price >= 251 && product.price <= 450;
       }
       if (selectedValues.indexOf('450+') !== -1) {

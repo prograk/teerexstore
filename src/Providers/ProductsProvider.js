@@ -217,6 +217,7 @@ const ProductsProvider = ({ children }) => {
       ...backup,
     };
 
+    // eslint-disable-next-line array-callback-return
     let tempProducts = Object.values(products).filter((product) => {
       const { color, gender, type } = product;
       if (selectedValues.indexOf(color) !== -1) {
@@ -229,13 +230,13 @@ const ProductsProvider = ({ children }) => {
         return product;
       }
       if (selectedValues.indexOf('0-250') !== -1) {
-        return product;
+        return product.price <= 250;
       }
       if (selectedValues.indexOf('251-450') !== -1) {
-        return product;
+        return product.price >= 251 && product.price <= 450;
       }
       if (selectedValues.indexOf('450+') !== -1) {
-        return product;
+        return product.price >= 451;
       }
     })
 

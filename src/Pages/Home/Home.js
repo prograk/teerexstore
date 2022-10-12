@@ -1,5 +1,6 @@
 import { useState } from "react";
 import Button from "src/Components/Button";
+import Dropdown from "src/Components/Dropdown";
 import Filters from "src/Components/Filters";
 import ProductCard from "src/Components/ProductCard";
 import { useProducts } from "src/Providers/ProductsProvider";
@@ -7,10 +8,10 @@ import { isObjEmpty } from "src/utils/misc";
 import "./home.scss";
 
 const ProductsRenderer = () => {
-  const { productsMapped, productsLoading } = useProducts();
+  const { productsMapped, products, productsLoading } = useProducts();
   if (productsLoading) return "loading.....";
 
-  const products = Object.values(productsMapped);
+  // const products = Object.values(productsMapped);
 
   if (products.length === 0) return <ProductCard.NoProductsFound />;
 
@@ -24,16 +25,26 @@ const ProductsRenderer = () => {
 };
 
 const Home = () => {
-  const { searchFilters, backup } = useProducts();
+  const { searchFilters, sortFilter, backup } = useProducts();
   const [showModal, setShowModal] = useState(false);
 
   const showFilters = isObjEmpty(backup);
+
+  const handleSortChange = (event) => {
+    sortFilter(event);
+  }
 
   return (
     <>
       <div className="fB a-fs">
         {!showFilters && <Filters showModal={showModal} setShowModal={setShowModal} />}
         <div className="products-container w100 f4 fB d-c a-fe">
+          Sort By:
+          <Dropdown onChange={handleSortChange} name="sort">
+            <option value=''>Select Sort</option>
+            <option value="lowprice">Price low to high</option>
+            <option value="highprice">Price high to low</option>
+          </Dropdown>
           <div className="fB a-s search-wrapper">
             <input
               type="text"

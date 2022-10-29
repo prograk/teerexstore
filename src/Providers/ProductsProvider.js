@@ -84,170 +84,39 @@ const ProductsProvider = ({ children }) => {
   }, []);
 
   const addToBag = useCallback(
-    (event, { id, qty = 1 }) => {
-      let product = products.filter((product, index) => product.id === id)[0];
-      let index = products.indexOf(product.id);
-      debugger;
-      // let cartProduct = { ...cartProducts[id] };
-      if (!product) return;
-      let { addedQty = 0, quantity: productQty } = product;
+    ({ id, qty = 1 }) => {
+      let product, index;
+      const rawProducts = [...products];
 
-      if (qty > 0) {
-        if (addedQty < productQty) {
-          const tempProduct = {
-            ...product,
-            addedQty: addedQty + 1,
-          }
-          // const tempData = {
-          //   ...productsMapped,
-          //   [product.id]: {
-          //     ...product,
-          //     addedQty: addedQty + 1,
-          //   },
-          // };
-          // const bkTempData = {
-          //   ...backup,
-          //   [product.id]: {
-          //     ...product,
-          //     addedQty: addedQty + 1,
-          //   },
-          // };
-          // setProductsMapped({
-          //   ...tempData,
-          // });
-          // setBackup({
-          //   ...bkTempData,
-          // });
-          debugger;
-          setProducts([...products, tempProduct]);
-          setCartCount((prev) => prev + 1);
-        } else {
-          openSnackbar("Product quantity exceeded");
+      rawProducts.forEach((prod, ind) => {
+        if (prod.id === id) {
+          product = prod;
+          index = ind;
         }
-      } else {
+      });
+
+      if (!product) return;
+      let { addedQty = 0, quantity: productQty } = rawProducts[index];
+
+      if (addedQty === productQty && qty > 0) {
+        openSnackbar("Product quantity exceeded");
+        return;
       }
+
+      rawProducts[index] = {
+        ...rawProducts[index],
+        addedQty: addedQty + qty,
+      }
+
+      const productsHash = productHashFn(rawProducts);
+      setProducts([...rawProducts]);
+      setCartCount((prev) => prev + qty);
+      setBackup(productsHash);
+
     },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     [products]
   );
-
-  // const addToBag = useCallback(
-  //   (event = null, { id, qty = 1, dropDown = false }) => {
-  //     let product = { ...productsMapped[id] };
-  //     if (!product) return;
-  //     if (!dropDown) {
-  //       if (!!product) {
-  //         let { addedQty = 0 } = product;
-  //         if (qty === -2) {
-  //           let count = cartCount;
-  //           const tempData = {
-  //             ...productsMapped,
-  //             [product.id]: {
-  //               ...product,
-  //               addedQty: 0,
-  //             },
-  //           };
-  //           const bkTempData = {
-  //             ...backup,
-  //             [product.id]: {
-  //               ...product,
-  //               addedQty: addedQty + 1,
-  //             },
-  //           };
-  //           setProductsMapped({
-  //             ...tempData,
-  //           });
-  //           setBackup({
-  //             ...bkTempData,
-  //           });
-  //           count = cartCount - addedQty;
-  //           setCartCount(count);
-  //           return;
-  //         }
-  //         if (qty > 0) {
-  //           const { quantity: productQty } = product;
-  //           if (addedQty < productQty) {
-  //             const tempData = {
-  //               ...productsMapped,
-  //               [product.id]: {
-  //                 ...product,
-  //                 addedQty: addedQty + 1,
-  //               },
-  //             };
-  //             const bkTempData = {
-  //               ...backup,
-  //               [product.id]: {
-  //                 ...product,
-  //                 addedQty: addedQty + 1,
-  //               },
-  //             };
-  //             setProductsMapped({
-  //               ...tempData,
-  //             });
-  //             setBackup({
-  //               ...bkTempData,
-  //             });
-  //             setCartCount((prev) => prev + 1);
-  //           } else {
-  //             openSnackbar("Product quantity exceeded");
-  //           }
-  //         } else {
-  //           if (addedQty > 0) {
-  //             const tempData = {
-  //               ...productsMapped,
-  //               [product.id]: {
-  //                 ...product,
-  //                 addedQty: addedQty - 1,
-  //               },
-  //             };
-  //             const bkTempData = {
-  //               ...backup,
-  //               [product.id]: {
-  //                 ...product,
-  //                 addedQty: addedQty - 1,
-  //               },
-  //             };
-  //             setProductsMapped({
-  //               ...tempData,
-  //             });
-  //             setBackup({
-  //               ...bkTempData,
-  //             });
-  //             setCartCount((prev) => prev - 1);
-  //           }
-  //         }
-  //       }
-  //     } else {
-  //       const quantity = Number(event.target.value);
-  //       let count = 0;
-  //       const tempData = {
-  //         ...productsMapped,
-  //         [product.id]: {
-  //           ...product,
-  //           addedQty: quantity,
-  //         },
-  //       };
-  //       const bkTempData = {
-  //         ...backup,
-  //         [product.id]: {
-  //           ...product,
-  //           addedQty: quantity,
-  //         },
-  //       };
-  //       Object.values(tempData)
-  //         .filter((product) => product.addedQty > 0)
-  //         .forEach((product) => (count += product.addedQty));
-
-  //       setProductsMapped({
-  //         ...tempData,
-  //       });
-  //       setBackup({
-  //         ...bkTempData,
-  //       });
-  //       setCartCount(count);
-  //     }
-  //   },
-  //   [backup, cartCount, openSnackbar, productsMapped]
-  // );
 
   const filterProducts = (event, selected, filter) => {
     const {
@@ -301,25 +170,6 @@ const ProductsProvider = ({ children }) => {
 
     const data = sortProducts(tempProducts);
 
-    // selectedValues.forEach((selectedValue) => {
-    //   tempProducts = Object.values(products).filter((product) => {
-    //     switch (selectedValue) {
-    //       case "0-250": {
-    //         return product.price <= 250;
-    //       }
-    //       case "251 - 450": {
-    //         return product.price >= 251 && product.price <= 450;
-    //       }
-    //       case "451+": {
-    //         return product.price >= 451;
-    //       }
-    //       default: {
-    //         return product[filter] === selectedValue;
-    //       }
-    //     }
-    //   });
-    // });
-
     const productsHash = productHashFn(data);
     setProducts(data);
     setProductsMapped({ ...productsHash });
@@ -339,9 +189,6 @@ const ProductsProvider = ({ children }) => {
     return Object.values(productsData).sort((a, b) =>
       sort === "lowprice" ? a.price - b.price : b.price - a.price
     );
-    // const products = productHashFn(rawProducts);
-    // setProducts(rawProducts);
-    // setProductsMapped({ ...products });
   };
 
   useEffect(() => {

@@ -9,15 +9,16 @@ import "./home.scss";
 
 const ProductsRenderer = () => {
   const { productsMapped, products, productsLoading } = useProducts();
+  
   if (productsLoading) return "loading.....";
 
   // const products = Object.values(productsMapped);
 
-  if (products.length === 0) return <ProductCard.NoProductsFound />;
+  if (products?.length === 0) return <ProductCard.NoProductsFound />;
 
   return (
     <section className="productSectionWrapper w100 row row-cols-3">
-      {products.map((product, index) => {
+      {products?.map((product, index) => {
         return <ProductCard key={index} {...product} />;
       })}
     </section>
@@ -39,7 +40,7 @@ const Home = () => {
       <div className="fB a-fs">
         {!showFilters && <Filters showModal={showModal} setShowModal={setShowModal} />}
         <div className="products-container w100 f4 fB d-c a-fe">
-          Sort By:
+          <label>Sort By:</label>
           <Dropdown onChange={handleSortChange} name="sort">
             <option value=''>Select Sort</option>
             <option value="lowprice">Price low to high</option>

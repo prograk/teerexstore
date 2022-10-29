@@ -3,9 +3,13 @@ import { useProducts } from "src/Providers/ProductsProvider";
 import "./bag.scss";
 
 const Bag = () => {
-  const { productsMapped } = useProducts();
+  const { productsMapped, products } = useProducts();
 
-  const BagProducts = Object.values(productsMapped).filter(
+  // const BagProducts = Object.values(productsMapped).filter(
+  //   (data) => data.addedQty
+  // );
+
+  const BagProducts = products.filter(
     (data) => data.addedQty
   );
 

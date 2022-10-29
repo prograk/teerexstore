@@ -8,7 +8,7 @@ const WithAddToBagButton = (props) => {
   const { addToBag } = useProducts();
   const { id } = props;
   return (
-    <Button type="button" className="btn-addbag fB" onClick={(event) => addToBag(event, { id })}>
+    <Button type="button" className="btn-addbag fB" onClick={() => addToBag({ id })}>
       Add To Bag
     </Button>
   )
@@ -19,9 +19,9 @@ const WithPlusMinusButton = (props) => {
   const { addToBag } = useProducts();
   return (
     <Button type="button" className="btn-qty fB">
-      <div onClick={(event) => addToBag(event, { id, qty: -1 })} className="f1">-</div>
+      <div onClick={() => addToBag({ id, qty: -1 })} className="f1">-</div>
       { addedQty }
-      <div onClick={(event) => addToBag(event, { id })} className="f1">+</div>
+      <div onClick={() => addToBag({ id })} className="f1">+</div>
     </Button>
   )
 };

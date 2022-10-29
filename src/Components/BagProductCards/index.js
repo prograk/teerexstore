@@ -20,7 +20,23 @@ const BagProductCards = ({
   quantity,
   addedQty,
 }) => {
-  const { addToBag } = useProducts();
+  const { addToBag, products } = useProducts();
+
+  const handleDropDownChange = (event, id) => {
+    const { value: rawValue } = event.target;
+    const value = +rawValue;
+    const [product] = products.filter(product => product.id === id);
+    const { addedQty } = product;
+    const isAdding = addedQty < value;
+    const qty = addedQty < value ? value - addedQty : addedQty - value;
+    addToBag({ id, qty: isAdding ? qty : -qty });
+  }
+
+  const handleRemove = (id) => {
+    const [product] = products.filter(product => product.id === id);
+    const { addedQty } = product;
+    addToBag({ id, qty: -addedQty });
+  }
 
   return (
     <div className="col">
@@ -35,7 +51,7 @@ const BagProductCards = ({
           </div>
           <div className="qty-drpdown">
             <Dropdown
-              onChange={(event) => addToBag(event, { id, dropDown: true })}
+              onChange={(event) => handleDropDownChange(event, id)}
               value={addedQty}
             >
               {Array(quantity)
@@ -49,7 +65,7 @@ const BagProductCards = ({
           <div>
             <button
               type="button"
-              onClick={(event) => addToBag(event, { id, qty: -2 })}
+              onClick={() => handleRemove(id)}
             >
               Remove
             </button>

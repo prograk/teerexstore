@@ -6,7 +6,7 @@ import "font-awesome/scss/font-awesome.scss";
 import "./index.scss";
 import reportWebVitals from "./reportWebVitals";
 import ProductsProvider from "src/Providers/ProductsProvider";
-import { HashRouter as Router, Routes, Route } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Home from "./Pages/Home/Home";
 import Bag from "./Pages/Bag/Bag";
 import Header from "src/Components/Header";
@@ -18,7 +18,7 @@ root.render(
   <ResponsiveProvider>
     <SnackbarProvider>
       <ProductsProvider>
-        <Router>
+        <Router basename="/teerexstore">
           <Header />
           <div className="container">
             <Routes>

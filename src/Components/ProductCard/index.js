@@ -20,7 +20,7 @@ const ProductCard = ({
   addedQty,
 }) => {
   return (
-    <div className="psw-col col-12 col-md-4">
+    <div className="psw-col col-12 col-md-4" data-testid={`product-card-${id}`}>
       <div className="card">
         <img src={imageURL} alt={name} className="card-img-top" />
         <div className="card-body">

@@ -13,7 +13,7 @@ const ProductsContext = createContext({});
 
 const ProductsProvider = ({ children }) => {
   const [products, setProducts] = useState([]);
-  const [cartProducts, setCartProducts] = useState({});
+  const [searchInput, setSearchInput] = useState('');
   const [productsMapped, setProductsMapped] = useState({});
   const [backup, setBackup] = useState({});
   const [colorFilter, setColorFilter] = useState([]);
@@ -58,10 +58,10 @@ const ProductsProvider = ({ children }) => {
 
   const getProductsCallback = useCallback(async () => {
     await getProducts()
-      .then((res) => {
-        const productsHash = productHashFn(res);
+      .then((data) => {
+        const productsHash = productHashFn(data);
         getFilters(productsHash);
-        setProducts(res);
+        setProducts(data);
         setProductsMapped(productsHash);
         setBackup(productsHash);
       })
@@ -227,9 +227,8 @@ const ProductsProvider = ({ children }) => {
   };
 
   const searchFilters = (event) => {
-    const {
-      target: { value: rawValue },
-    } = event;
+    const { value: rawValue } = event.target;
+    setSearchInput(rawValue);
     const value = rawValue.toLowerCase();
     if (value.length > 2) {
       const productsObj = {
@@ -263,6 +262,7 @@ const ProductsProvider = ({ children }) => {
     genderFilter,
     typeFilter,
     priceFilter,
+    searchInput,
     sortFilter,
     searchFilters,
     filterProducts,

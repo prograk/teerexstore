@@ -10,26 +10,21 @@ const Header = () => {
         <div className="container-fluid">
           <div className="fB w100 j-sb">
             <h1 className="logo">
-              <NavLink to="/" exact="true">
+              <NavLink to="/">
                 TeeRex Store
               </NavLink>
             </h1>
             <nav className="fB a-c">
               <NavLink
-                to="/"
-                exact="true"
+                to="/home"
                 className="home"
                 title="homepage"
-                style={({ isActive }) => {
-                  return isActive ? { textDecoration: "underline" } : undefined;
-                }}
               >
                 Products
               </NavLink>
               <div>
                 <NavLink
                   to="/bag"
-                  exact="true"
                   className="bag"
                   title="bagpage"
                 >

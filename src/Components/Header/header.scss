@@ -44,3 +44,9 @@ a.bag sup {
 a.bag {
   position: relative;
 }
+
+a.home {
+  &.active {
+    text-decoration: underline;
+  }
+}

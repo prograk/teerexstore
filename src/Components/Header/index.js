@@ -10,26 +10,36 @@ const Header = () => {
         <div className="container-fluid">
           <div className="fB w100 j-sb">
             <h1 className="logo">
-              <NavLink to="/" exact="true">TeeRex Store</NavLink>
+              <NavLink to="/" exact="true">
+                TeeRex Store
+              </NavLink>
             </h1>
             <nav className="fB a-c">
               <NavLink
                 to="/"
                 exact="true"
+                className="home"
+                title="homepage"
                 style={({ isActive }) => {
-                    return isActive ? { textDecoration: "underline" } : undefined
-                  }
-                }
+                  return isActive ? { textDecoration: "underline" } : undefined;
+                }}
               >
                 Products
               </NavLink>
               <div>
-                <NavLink to="/bag" exact="true" className="cartBag">
+                <NavLink
+                  to="/bag"
+                  exact="true"
+                  className="bag"
+                  title="bagpage"
+                >
                   <i
                     className="fa fa-shopping-cart header_icon"
                     aria-hidden="true"
                   ></i>{" "}
-                  {cartCount > 0 && <sup>{cartCount}</sup>}
+                  {cartCount > 0 && (
+                    <sup data-testid="cartvalue">{cartCount}</sup>
+                  )}
                 </NavLink>
               </div>
             </nav>

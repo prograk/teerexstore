@@ -10,12 +10,12 @@ const App = () => (
   <ResponsiveProvider>
     <SnackbarProvider>
       <ProductsProvider>
-        <Router>
+        <Router basename="/teerexstore">
           <Header />
           <div className="container">
             <Routes>
-              <Route exact="true" path="/" element={<Home />} />
-              <Route exact="true" path="/bag" element={<Bag />} />
+              <Route path="/" element={<Home />} />
+              <Route path="/bag" element={<Bag />} />
             </Routes>
           </div>
         </Router>

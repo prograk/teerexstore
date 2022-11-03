@@ -18,8 +18,9 @@
     "web-vitals": "^2.1.4"
   },
   "devDependencies": {
-    "sass": "^1.32.12",
-    "gh-pages": "^2.2.0"
+    "@babel/preset-env": "^7.19.4",
+    "gh-pages": "^2.2.0",
+    "sass": "^1.32.12"
   },
   "scripts": {
     "predeploy": "yarn build",
@@ -27,7 +28,7 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "start:build": "http-server --proxy http://localhost:8080 ./build",
-    "test": "react-scripts test",
+    "test": "react-scripts test --testURL http://localhost/teerexstore",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {

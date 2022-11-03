@@ -8,7 +8,6 @@ const DEVICES = {
 const ResponsiveContext = createContext({});
 
 const ResponsiveProvider = ({children}) => {
-  // const
   const [device, setDevice] = useState(DEVICES.MOBILE);
   const [isMobile, setMobile] = useState(true);
   const [isDesktop, setDesktop] = useState(false);

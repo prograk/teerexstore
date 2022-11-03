@@ -28,7 +28,7 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "start:build": "http-server --proxy http://localhost:8080 ./build",
-    "test": "react-scripts test",
+    "test": "react-scripts test --testURL http://localhost/teerexstore",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {

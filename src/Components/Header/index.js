@@ -16,7 +16,7 @@ const Header = () => {
             </h1>
             <nav className="fB a-c">
               <NavLink
-                to="/home"
+                to="/"
                 className="home"
                 title="homepage"
               >

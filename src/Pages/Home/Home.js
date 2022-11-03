@@ -8,7 +8,7 @@ import { isObjEmpty } from "src/utils/misc";
 import "./home.scss";
 
 const ProductsRenderer = () => {
-  const { productsMapped, products, productsLoading } = useProducts();
+  const { products, productsLoading } = useProducts();
 
   if (productsLoading) return "loading.....";
 

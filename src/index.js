@@ -11,6 +11,7 @@ import Home from "./Pages/Home/Home";
 import Bag from "./Pages/Bag/Bag";
 import Header from "src/Components/Header";
 import ResponsiveProvider from "./Providers/ResponsiveProvier";
+import ProductDetails from "./Pages/ProductDetails";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
@@ -23,6 +24,7 @@ root.render(
           <div className="container">
             <Routes>
               <Route exact="true" path="/" element={<Home />} />
+              <Route exact="true" path="/details/:id" element={<ProductDetails />} />
               <Route exact="true" path="/bag" element={<Bag />} />
             </Routes>
           </div>

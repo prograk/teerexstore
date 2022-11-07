@@ -1,3 +1,4 @@
+import { NavLink } from "react-router-dom";
 import { formatCurrency } from "src/utils/misc.js";
 import AddToBagButton from "../AddToBagButton";
 import "./productCard.scss";
@@ -20,18 +21,20 @@ const ProductCard = ({
   addedQty,
 }) => {
   return (
-    <div className="psw-col col-12 col-md-4">
-      <div className="card">
-        <img src={imageURL} alt={name} className="card-img-top" />
-        <div className="card-body">
-          <h5 className="card-title">{name}</h5>
-          <div className="fB a-c j-sb">
-            <p className="card-text m0">{formatCurrency(price, currency)}</p>
-            <AddToBagButton {...{ id, addedQty, quantity }} />
+    <NavLink to={`details/${id}`} exact="true">
+      <div className="psw-col col-12 col-md-4">
+        <div className="card">
+          <img src={imageURL} alt={name} className="card-img-top" />
+          <div className="card-body">
+            <h5 className="card-title">{name}</h5>
+            <div className="fB a-c j-sb">
+              <p className="card-text m0">{formatCurrency(price, currency)}</p>
+              <AddToBagButton {...{ id, addedQty, quantity }} />
+            </div>
           </div>
         </div>
       </div>
-    </div>
+    </NavLink>
   );
 };
 

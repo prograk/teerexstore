@@ -13,6 +13,7 @@ const ProductsContext = createContext({});
 
 const ProductsProvider = ({ children }) => {
   const [products, setProducts] = useState([]);
+  const [searchInput, setSearchInput] = useState('');
   const [productsMapped, setProductsMapped] = useState({});
   const [backup, setBackup] = useState({});
   const [colorFilter, setColorFilter] = useState([]);
@@ -26,7 +27,6 @@ const ProductsProvider = ({ children }) => {
     type: [],
     price: [],
   });
-  // const [selectedPrice, setSelectedPrice] = useState([]);
   const [currentFilter, setCurrentFilter] = useState("");
   const [cartCount, setCartCount] = useState(0);
   const [openSnackbar] = useSnackbar();

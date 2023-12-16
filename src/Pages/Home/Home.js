@@ -16,38 +16,48 @@ const ProductsRenderer = () => {
 
   return (
     <section className="productSectionWrapper w100 row row-cols-3">
-      {products?.map((product, index) => {
-        return <ProductCard key={index} {...product} />;
+      {products?.map((product) => {
+        return <ProductCard key={product.id} {...product} />;
       })}
     </section>
   );
 };
 
+export const SortFilterComp = ({ handleSortChange }) => (
+  <>
+    <label>Sort By:</label>
+    <Dropdown onChange={handleSortChange} name="sort" testId="sortdropdown">
+      <option value="">Select Sort</option>
+      <option value="lowprice">Price low to high</option>
+      <option value="highprice">Price high to low</option>
+    </Dropdown>
+  </>
+)
+
 const Home = () => {
-  const { searchFilters, sortFilter, backup } = useProducts();
+  const { searchFilters, searchInput, sortFilter, backup } = useProducts();
   const [showModal, setShowModal] = useState(false);
 
   const showFilters = isObjEmpty(backup);
 
   const handleSortChange = (event) => {
     sortFilter(event);
-  }
+  };
 
   return (
     <>
       <div className="fB a-fs">
-        {!showFilters && <Filters showModal={showModal} setShowModal={setShowModal} />}
+        {!showFilters && (
+          <Filters showModal={showModal} setShowModal={setShowModal} />
+        )}
         <div className="products-container w100 f4 fB d-c a-fe">
-          <label>Sort By:</label>
-          <Dropdown onChange={handleSortChange} name="sort">
-            <option value=''>Select Sort</option>
-            <option value="lowprice">Price low to high</option>
-            <option value="highprice">Price high to low</option>
-          </Dropdown>
+          <SortFilterComp handleSortChange={handleSortChange} />
           <div className="fB a-s search-wrapper">
             <input
               type="text"
+              value={searchInput}
               className="searchInput"
+              data-testid="searchinput"
               onChange={searchFilters}
             />
             <Button className="btn-small hide-mobile" type="button">

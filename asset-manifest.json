@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/teerexstore/static/css/main.c74cbcde.css",
-    "main.js": "/teerexstore/static/js/main.2d6b2a22.js",
+    "main.css": "/teerexstore/static/css/main.a6e32348.css",
+    "main.js": "/teerexstore/static/js/main.a7582397.js",
     "static/js/787.6b93b6b5.chunk.js": "/teerexstore/static/js/787.6b93b6b5.chunk.js",
     "static/media/fontawesome-webfont.svg?v=4.7.0": "/teerexstore/static/media/fontawesome-webfont.c1e38fd9e0e74ba58f7a.svg",
     "static/media/fontawesome-webfont.eot": "/teerexstore/static/media/fontawesome-webfont.8b43027f47b20503057d.eot",
@@ -9,12 +9,12 @@
     "static/media/fontawesome-webfont.woff?v=4.7.0": "/teerexstore/static/media/fontawesome-webfont.f691f37e57f04c152e23.woff",
     "static/media/fontawesome-webfont.woff2?v=4.7.0": "/teerexstore/static/media/fontawesome-webfont.20fd1704ea223900efa9.woff2",
     "index.html": "/teerexstore/index.html",
-    "main.c74cbcde.css.map": "/teerexstore/static/css/main.c74cbcde.css.map",
-    "main.2d6b2a22.js.map": "/teerexstore/static/js/main.2d6b2a22.js.map",
+    "main.a6e32348.css.map": "/teerexstore/static/css/main.a6e32348.css.map",
+    "main.a7582397.js.map": "/teerexstore/static/js/main.a7582397.js.map",
     "787.6b93b6b5.chunk.js.map": "/teerexstore/static/js/787.6b93b6b5.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.c74cbcde.css",
-    "static/js/main.2d6b2a22.js"
+    "static/css/main.a6e32348.css",
+    "static/js/main.a7582397.js"
   ]
 }

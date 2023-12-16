@@ -13,7 +13,6 @@ const ProductsContext = createContext({});
 
 const ProductsProvider = ({ children }) => {
   const [products, setProducts] = useState([]);
-  const [cartProducts, setCartProducts] = useState({});
   const [productsMapped, setProductsMapped] = useState({});
   const [backup, setBackup] = useState({});
   const [colorFilter, setColorFilter] = useState([]);
@@ -21,7 +20,12 @@ const ProductsProvider = ({ children }) => {
   const [typeFilter, setTypeFilter] = useState([]);
   const [priceFilter] = useState(["0-250", "250-450", "450+"]);
   const [sort, setSort] = useState("");
-  const [selectedValues, setSelectedValues] = useState([]);
+  const [selectedValues, setSelectedValues] = useState({
+    color: [],
+    gender: [],
+    type: [],
+    price: [],
+  });
   // const [selectedPrice, setSelectedPrice] = useState([]);
   const [currentFilter, setCurrentFilter] = useState("");
   const [cartCount, setCartCount] = useState(0);
@@ -124,10 +128,16 @@ const ProductsProvider = ({ children }) => {
     } = event;
 
     if (checked) {
-      const filterValues = [...selectedValues, selected];
+      const filterValues = {
+        ...selectedValues,
+        [filter]: [...selectedValues[filter], selected],
+      }
       setSelectedValues(filterValues);
     } else {
-      const filterValues = [...selectedValues.filter((sv) => sv !== selected)];
+      const filterValues = {
+        ...selectedValues,
+        [filter]: [...selectedValues[filter].filter((sv) => sv !== selected)],
+      }
       setSelectedValues(filterValues);
     }
     setCurrentFilter(filter);
@@ -145,27 +155,22 @@ const ProductsProvider = ({ children }) => {
       ...backup,
     };
 
-    // eslint-disable-next-line array-callback-return
     let tempProducts = Object.values(products).filter((product) => {
-      const { color, gender, type } = product;
-      if (selectedValues.indexOf(color) !== -1) {
-        return product;
-      }
-      if (selectedValues.indexOf(gender) !== -1) {
-        return product;
-      }
-      if (selectedValues.indexOf(type) !== -1) {
-        return product;
-      }
-      if (selectedValues.indexOf("0-250") !== -1) {
-        return product.price <= 250;
-      }
-      if (selectedValues.indexOf("250-450") !== -1) {
-        return product.price >= 251 && product.price <= 450;
-      }
-      if (selectedValues.indexOf("450+") !== -1) {
-        return product.price >= 451;
-      }
+      const { color, gender, type, price } = product;
+    
+      // Check if a filter is selected, and if so, check for a match
+      let colorMatch = selectedValues?.color?.length ? selectedValues.color.includes(color) : true;
+      let genderMatch = selectedValues?.gender?.length ? selectedValues.gender.includes(gender) : true;
+      let typeMatch = selectedValues?.type?.length ? selectedValues.type.includes(type) : true;
+    
+      // Check for price match if a price filter is selected
+      let priceMatch = true; // default to true if no price filter is selected
+      if (selectedValues.price.includes("0-250") && price > 250) priceMatch = false;
+      if (selectedValues.price.includes("250-450") && (price < 251 || price > 450)) priceMatch = false;
+      if (selectedValues.price.includes("450+") && price < 451) priceMatch = false;
+    
+      // Product should match any selected filters
+      return colorMatch && genderMatch && typeMatch && priceMatch;
     });
 
     const data = sortProducts(tempProducts);
